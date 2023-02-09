@@ -1,72 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
+import {
+  ChatContainer,
+  ChatHeader,
+  ChatMessages,
+  MessageContainer,
+  ChatForm,
+  ChatInput,
+  ChatButton,
+} from "./styles";
+import { Message, TimestampToDateOptions } from "./types";
 
 const API_URL = `https://chatty.doodle-test.com/api/chatty/v1.0/?token=${process.env.REACT_APP_CHATTY_TOKEN}`;
-
-interface Message {
-  id: string;
-  author: string;
-  message: string;
-  timestamp: number;
-}
-
-interface TimestampToDateOptions {
-  year: "numeric";
-  month: "long";
-  day: "numeric";
-  hour: "numeric";
-  minute: "numeric";
-}
-
-const ChatContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-`;
-
-const ChatHeader = styled.h1`
-  font-size: 24px;
-  margin-bottom: 20px;
-`;
-
-const ChatMessages = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 80%;
-  margin-bottom: 20px;
-`;
-
-const MessageContainer = styled.div`
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid lightgray;
-`;
-
-const ChatForm = styled.form`
-  display: flex;
-  width: 80%;
-  margin-bottom: 20px;
-`;
-
-const ChatInput = styled.input`
-  flex: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid lightgray;
-`;
-
-const ChatButton = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: lightgray;
-  border: none;
-  margin-left: 10px;
-  cursor: pointer;
-`;
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
