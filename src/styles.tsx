@@ -1,36 +1,48 @@
 import styled from "styled-components";
+import BackgroundImage from "./images/background.png";
 
 const ChatContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-`;
-
-const ChatHeader = styled.h1`
-  font-size: 24px;
-  margin-bottom: 20px;
+  width: 100%;
+  height: 100%;
+  background-image: url(${BackgroundImage});
+  background-repeat: repeat;
 `;
 
 const ChatMessages = styled.div`
+  max-width: 664px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 80%;
-  margin-bottom: 20px;
+  justify-content: center;
+  align-self: center;
+  margin: 0 auto;
 `;
 
-const MessageContainer = styled.div`
-  width: 100%;
+const Message = styled.div`
+  padding: 16px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(218, 222, 209);
   margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid lightgray;
+  border-radius: 2px;
+  color: rgb(95, 101, 101);
+  font-weight: bold;
+  font-size: 15px;
+`;
+
+const SendTime = styled.div`
+  color: rgb(179, 188, 194);
+  font-size: 13px;
+  text-align: right;
 `;
 
 const ChatForm = styled.form`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   display: flex;
-  width: 80%;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 15px;
+  background-color: rgb(54, 152, 212);
 `;
 
 const ChatInput = styled.input`
@@ -43,18 +55,21 @@ const ChatInput = styled.input`
 const ChatButton = styled.button`
   padding: 10px 20px;
   font-size: 16px;
-  background-color: lightgray;
+  background-color: rgb(255, 135, 109);
+  color: rgb(255, 255, 255);
   border: none;
   margin-left: 10px;
+  margin-right: 10px;
+  font-weight: bold;
   cursor: pointer;
 `;
 
 export {
   ChatContainer,
-  ChatHeader,
+  Message,
   ChatMessages,
-  MessageContainer,
   ChatForm,
   ChatInput,
   ChatButton,
+  SendTime,
 };

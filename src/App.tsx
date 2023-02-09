@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import {
   ChatContainer,
-  ChatHeader,
-  ChatMessages,
-  MessageContainer,
+  Message as StyledMessage,
   ChatForm,
   ChatInput,
   ChatButton,
+  ChatMessages,
+  SendTime,
 } from "./styles";
 import { Message } from "./types";
 import { useMutation, useQuery } from "react-query";
@@ -15,6 +15,8 @@ import { API_URL } from "./constants";
 import { formattedDate, sendMessage } from "./helpers";
 
 const App: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const [newMessage, setNewMessage] = useState<string>("");
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["messages"],
@@ -33,21 +35,49 @@ const App: React.FC = () => {
     sendMessageMutation.mutate(newMessage);
   };
 
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop =
+        containerRef.current?.scrollHeight - containerRef.current?.clientHeight;
+    }
+  }, []);
+
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
-    <ChatContainer>
-      <ChatHeader>Chat App</ChatHeader>
-      <ChatMessages>
-        {data.map((message: Message) => (
-          <MessageContainer key={message.id}>
-            <p>Author: {message.author}</p>
-            <p>Message: {message.message}</p>
-            <p>Time: {formattedDate(message.timestamp)}</p>
-          </MessageContainer>
-        ))}
-      </ChatMessages>
+    <>
+      <ChatContainer>
+        <ChatMessages ref={containerRef}>
+          {data.map((message: Message) => {
+            console.log(message);
+            return message.author !== "You" ? (
+              <StyledMessage
+                style={{
+                  alignSelf: "flex-end",
+                  backgroundColor: "rgb(252, 246, 197)",
+                  minWidth: "420px",
+                }}
+                key={message.id}
+              >
+                <p>{message.message}</p>
+                <SendTime>{formattedDate(message.timestamp)}</SendTime>
+              </StyledMessage>
+            ) : (
+              <StyledMessage
+                style={{
+                  alignSelf: "flex-start",
+                }}
+                key={message.id}
+              >
+                <p>{message.author}</p>
+                <p>{message.message}</p>
+                <SendTime>{formattedDate(message.timestamp)}</SendTime>
+              </StyledMessage>
+            );
+          })}
+        </ChatMessages>
+      </ChatContainer>
       <ChatForm onSubmit={handleSubmit}>
         <ChatInput
           type="text"
@@ -56,7 +86,7 @@ const App: React.FC = () => {
         />
         <ChatButton type="submit">Send</ChatButton>
       </ChatForm>
-    </ChatContainer>
+    </>
   );
 };
 

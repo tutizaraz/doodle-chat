@@ -5,10 +5,7 @@ export interface Message {
   timestamp: number;
 }
 
-export interface TimestampToDateOptions {
-  year: "numeric";
-  month: "long";
-  day: "numeric";
-  hour: "numeric";
-  minute: "numeric";
+export enum Roles {
+  me = "me",
+  otherPerson = "otherPerson",
 }
