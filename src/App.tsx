@@ -53,8 +53,10 @@ const App: React.FC = () => {
     }
   }, [data]);
 
-  const isEmptyMessage =
+  const isEmptyInputMessageField =
     newMessage.length === 0 || !newMessage || newMessage.trim().length === 0;
+
+  const isEmptyData = data.length === 0;
 
   if (isLoading)
     return (
@@ -74,7 +76,7 @@ const App: React.FC = () => {
     <>
       <ChatContainer ref={lastMessageRef}>
         <ChatMessages>
-          {data.length === 0 ? (
+          {isEmptyData ? (
             <StateMessage>
               <h1>No messages</h1>
             </StateMessage>
@@ -110,7 +112,7 @@ const App: React.FC = () => {
               value={newMessage}
               onChange={handleMessageChange}
             />
-            <ChatButton type="submit" disabled={isEmptyMessage}>
+            <ChatButton type="submit" disabled={isEmptyInputMessageField}>
               Send
             </ChatButton>
           </ChatFormContainer>
