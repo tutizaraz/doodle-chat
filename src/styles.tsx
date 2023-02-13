@@ -83,6 +83,17 @@ const ChatButton = styled.button`
   }
 `;
 
+const StateMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  h1 {
+    color: rgb(60, 60, 60);
+  }
+`;
+
 export {
   ChatContainer,
   Message,
@@ -92,4 +103,5 @@ export {
   ChatInput,
   ChatButton,
   SendTime,
+  StateMessage,
 };
