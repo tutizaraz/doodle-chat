@@ -21,6 +21,9 @@ import { Message } from "./types";
 import { useMutation, useQuery } from "react-query";
 import { API_URL } from "./constants";
 import { formattedDate, sendMessage } from "./helpers";
+const ErrorState = React.lazy(() => import("./components/Error"));
+const LoadingState = React.lazy(() => import("./components/Loading"));
+const EmptyState = React.lazy(() => import("./components/Empty"));
 
 const App: React.FC = () => {
   const { isLoading, error, data, refetch } = useQuery({
@@ -58,32 +61,21 @@ const App: React.FC = () => {
 
   const isEmptyData = data?.length === 0;
 
-  if (isLoading)
-    return (
-      <StateMessage>
-        <h1>Loading...</h1>
-      </StateMessage>
-    );
-
-  if (error)
-    return (
-      <StateMessage>
-        <h1>Error :(</h1>
-      </StateMessage>
-    );
+  if (isLoading) return <LoadingState />;
+  if (error) return <ErrorState />;
 
   return (
     <>
       <ChatContainer ref={lastMessageRef}>
         <ChatMessages>
           {isEmptyData ? (
-            <StateMessage>
-              <h1>No messages</h1>
-            </StateMessage>
+            <EmptyState />
           ) : (
             data.map((message: Message, key: number) => {
               return (
                 <StyledMessage
+                  aria-live="polite"
+                  aria-relevant="additions"
                   key={key}
                   style={
                     message.author === "me"
@@ -106,8 +98,9 @@ const App: React.FC = () => {
         <ChatForm onSubmit={handleSubmit}>
           <ChatFormContainer>
             <ChatInput
-              placeholder="Type..."
-              aria-label="chat-input"
+              placeholder="Enter your message"
+              aria-label="Enter message"
+              aria-describedby="message-input-hint"
               type="text"
               value={newMessage}
               onChange={handleMessageChange}
