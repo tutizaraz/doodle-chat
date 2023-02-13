@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import axios from "axios";
 import {
   ChatContainer,
@@ -30,7 +36,12 @@ const App: React.FC = () => {
     },
   });
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleMessageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setNewMessage(value);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendMessageMutation.mutate(newMessage);
   };
@@ -43,6 +54,9 @@ const App: React.FC = () => {
       lastMessageRef.current.scrollTo(0, scroll);
     }
   }, [data]);
+
+  const isEmptyMessage =
+    newMessage.length === 0 || !newMessage || newMessage.trim().length === 0;
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -77,9 +91,11 @@ const App: React.FC = () => {
             <ChatInput
               type="text"
               value={newMessage}
-              onChange={(event) => setNewMessage(event.target.value)}
+              onChange={handleMessageChange}
             />
-            <ChatButton type="submit">Send</ChatButton>
+            <ChatButton type="submit" disabled={isEmptyMessage}>
+              Send
+            </ChatButton>
           </ChatFormContainer>
         </ChatForm>
       </ChatContainer>

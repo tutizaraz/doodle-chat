@@ -17,6 +17,10 @@ const ChatMessages = styled.div`
   justify-content: center;
   align-self: center;
   margin: 0 auto;
+
+  @media (max-width: 670px) {
+    width: 90%;
+  }
 `;
 
 const Message = styled.div`
@@ -51,6 +55,10 @@ const ChatFormContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
+
+  @media (max-width: 670px) {
+    width: 90%;
+  }
 `;
 
 const ChatInput = styled.input`
@@ -69,6 +77,10 @@ const ChatButton = styled.button`
   margin-left: 10px;
   font-weight: bold;
   cursor: pointer;
+
+  &:disabled {
+    background-color: rgb(220, 192, 186);
+  }
 `;
 
 export {
