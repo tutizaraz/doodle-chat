@@ -56,7 +56,7 @@ const App: React.FC = () => {
   const isEmptyInputMessageField =
     newMessage.length === 0 || !newMessage || newMessage.trim().length === 0;
 
-  const isEmptyData = data.length === 0;
+  const isEmptyData = data?.length === 0;
 
   if (isLoading)
     return (
