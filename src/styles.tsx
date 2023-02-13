@@ -2,14 +2,16 @@ import styled from "styled-components";
 import BackgroundImage from "./images/background.png";
 
 const ChatContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  height: 92vh;
+  overflow-y: scroll;
   background-image: url(${BackgroundImage});
   background-repeat: repeat;
+  position: relative;
 `;
 
 const ChatMessages = styled.div`
   max-width: 664px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,7 +23,8 @@ const Message = styled.div`
   padding: 16px;
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(218, 222, 209);
-  margin-bottom: 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
   border-radius: 2px;
   color: rgb(95, 101, 101);
   font-weight: bold;
@@ -37,12 +40,17 @@ const SendTime = styled.div`
 const ChatForm = styled.form`
   position: fixed;
   bottom: 0;
+  padding: 15px 0 15px;
+  background-color: rgb(54, 152, 212);
   width: 100%;
+`;
+
+const ChatFormContainer = styled.div`
+  width: 664px;
   display: flex;
   justify-content: space-between;
-  flex-direction: row;
-  padding: 15px;
-  background-color: rgb(54, 152, 212);
+  align-items: center;
+  margin: 0 auto;
 `;
 
 const ChatInput = styled.input`
@@ -59,7 +67,6 @@ const ChatButton = styled.button`
   color: rgb(255, 255, 255);
   border: none;
   margin-left: 10px;
-  margin-right: 10px;
   font-weight: bold;
   cursor: pointer;
 `;
@@ -69,6 +76,7 @@ export {
   Message,
   ChatMessages,
   ChatForm,
+  ChatFormContainer,
   ChatInput,
   ChatButton,
   SendTime,

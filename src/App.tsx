@@ -8,6 +8,7 @@ import {
   ChatButton,
   ChatMessages,
   SendTime,
+  ChatFormContainer,
 } from "./styles";
 import { Message } from "./types";
 import { useMutation, useQuery } from "react-query";
@@ -15,13 +16,12 @@ import { API_URL } from "./constants";
 import { formattedDate, sendMessage } from "./helpers";
 
 const App: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const [newMessage, setNewMessage] = useState<string>("");
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["messages"],
     queryFn: () => axios.get(API_URL).then((res) => res.data),
   });
+  const [newMessage, setNewMessage] = useState<string>("");
+  const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
   const sendMessageMutation = useMutation(sendMessage, {
     onSuccess: () => {
@@ -36,56 +36,53 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop =
-        containerRef.current?.scrollHeight - containerRef.current?.clientHeight;
+    if (lastMessageRef.current) {
+      const scroll =
+        lastMessageRef.current.scrollHeight -
+        lastMessageRef.current.clientHeight;
+      lastMessageRef.current.scrollTo(0, scroll);
     }
-  }, []);
+  }, [data]);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
     <>
-      <ChatContainer>
-        <ChatMessages ref={containerRef}>
-          {data.map((message: Message) => {
-            console.log(message);
-            return message.author !== "You" ? (
+      <ChatContainer ref={lastMessageRef}>
+        <ChatMessages>
+          {data.map((message: Message, key: number) => {
+            return (
               <StyledMessage
-                style={{
-                  alignSelf: "flex-end",
-                  backgroundColor: "rgb(252, 246, 197)",
-                  minWidth: "420px",
-                }}
-                key={message.id}
+                key={key}
+                style={
+                  message.author === "me"
+                    ? {
+                        alignSelf: "flex-end",
+                        backgroundColor: "rgb(252, 246, 197)",
+                        minWidth: "auto",
+                      }
+                    : { alignSelf: "flex-start", minWidth: "auto" }
+                }
               >
-                <p>{message.message}</p>
-                <SendTime>{formattedDate(message.timestamp)}</SendTime>
-              </StyledMessage>
-            ) : (
-              <StyledMessage
-                style={{
-                  alignSelf: "flex-start",
-                }}
-                key={message.id}
-              >
-                <p>{message.author}</p>
-                <p>{message.message}</p>
+                {message.author !== "me" && <p>{message.author}</p>}
+                <p dangerouslySetInnerHTML={{ __html: message.message }} />
                 <SendTime>{formattedDate(message.timestamp)}</SendTime>
               </StyledMessage>
             );
           })}
         </ChatMessages>
+        <ChatForm onSubmit={handleSubmit}>
+          <ChatFormContainer>
+            <ChatInput
+              type="text"
+              value={newMessage}
+              onChange={(event) => setNewMessage(event.target.value)}
+            />
+            <ChatButton type="submit">Send</ChatButton>
+          </ChatFormContainer>
+        </ChatForm>
       </ChatContainer>
-      <ChatForm onSubmit={handleSubmit}>
-        <ChatInput
-          type="text"
-          value={newMessage}
-          onChange={(event) => setNewMessage(event.target.value)}
-        />
-        <ChatButton type="submit">Send</ChatButton>
-      </ChatForm>
     </>
   );
 };
