@@ -1,36 +1,41 @@
-# Getting Started with Create React App
+# Doodle chat
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## \_The Last Markdown Editor, dbarabashdev
 
-## Available Scripts
+Doodle chat is an application that uses an api and allows you to send messages.
 
-In the project directory, you can run:
+- Type some text
+- Click send button
+- ✨Magic ✨
 
-### `yarn start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Responsive user interface
+- Send button disabled if input value absent
+- User-friendly scroll bar
+- Sent message without a mouse
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Tech
 
-### `yarn test`
+- [React] - A JavaScript library for building user interfaces
+- [TypeScript] - JavaScript with syntax for types
+- [create-react-app] - Set up a modern web app by running one command
+- [styled-components] - Visual primitives for the component age.
+- [node.js] - evented I/O for the backend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `yarn build`
+Doodle chat application i development mode requires [Node.js](https://nodejs.org/) v19+ to run.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Install the dependencies and devDependencies and start the server.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```sh
+yarn
+yarn start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Running tests with react-testing-library
 
-### Deployment
-
-This project is deployed using Vercel and is available at the following URL:
-
-https://doodle-chat.vercel.app/
+```sh
+yarn test
+```
