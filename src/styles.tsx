@@ -9,7 +9,7 @@ const ChatContainer = styled.div`
   position: relative;
 `;
 
-const ChatMessages = styled.div`
+const ChatMessages = styled.ul`
   max-width: 664px;
   overflow-y: auto;
   display: flex;
@@ -17,13 +17,14 @@ const ChatMessages = styled.div`
   justify-content: center;
   align-self: center;
   margin: 0 auto;
+  list-style: none;
 
   @media (max-width: 670px) {
     width: 90%;
   }
 `;
 
-const Message = styled.div`
+const Message = styled.li`
   padding: 16px;
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(218, 222, 209);

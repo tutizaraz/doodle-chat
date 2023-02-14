@@ -72,7 +72,7 @@ describe("Doodle chat", () => {
 
     it("is disabled if input is empty", () => {
       renderApp();
-      const input = screen.getByLabelText("chat-input");
+      const input = screen.getByLabelText("Enter message");
       const sendButton = screen.getByText("Send");
 
       expect(sendButton).toBeDisabled();
