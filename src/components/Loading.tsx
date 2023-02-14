@@ -1,11 +1,12 @@
-import { StateMessage } from "../styles";
+import { FC } from "react"
+import { StateMessage } from "../styles"
 
-const Loading: React.FC = () => {
+const Loading: FC = () => {
   return (
     <StateMessage>
-      <h1>Error :(</h1>
+      <h1>Loading...</h1>
     </StateMessage>
-  );
-};
+  )
+}
 
-export default Loading;
+export default Loading

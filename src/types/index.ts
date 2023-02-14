@@ -1,8 +1,8 @@
 export interface Message {
-  id: string;
-  author: string;
-  message: string;
-  timestamp: number;
+  id: string
+  author: string
+  message: string
+  timestamp: number
 }
 
 export enum Roles {
