@@ -1,6 +1,8 @@
-import React, {
+import {
   ChangeEvent,
+  FC,
   FormEvent,
+  lazy,
   useEffect,
   useRef,
   useState,
@@ -20,11 +22,12 @@ import { Message } from "./types";
 import { useMutation, useQuery } from "react-query";
 import { API_URL } from "./constants";
 import { formattedDate, sendMessage } from "./helpers";
-const ErrorState = React.lazy(() => import("./components/Error"));
-const LoadingState = React.lazy(() => import("./components/Loading"));
-const EmptyState = React.lazy(() => import("./components/Empty"));
 
-const App: React.FC = () => {
+const ErrorState = lazy(() => import("./components/Error"));
+const LoadingState = lazy(() => import("./components/Loading"));
+const EmptyState = lazy(() => import("./components/Empty"));
+
+const App: FC = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["messages"],
     queryFn: () => axios.get(API_URL).then((res) => res.data),
@@ -39,7 +42,7 @@ const App: React.FC = () => {
     },
   });
 
-  const handleMessageChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleMessage = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setNewMessage(value);
   };
@@ -50,15 +53,15 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    if (lastMessageRef.current && lastMessageRef.current.scrollTo) {
-      lastMessageRef.current.scrollTo(0, lastMessageRef.current.scrollHeight);
+    const { current: lastMessage } = lastMessageRef;
+
+    if (lastMessage && lastMessage.scrollTo) {
+      lastMessage.scrollTo(0, lastMessage.scrollHeight);
     }
   }, [data]);
 
-  const isEmptyInputMessageField =
-    newMessage.length === 0 || !newMessage || newMessage.trim().length === 0;
-
-  const isEmptyData = data?.length === 0;
+  const isMessageFieldEmpty = !newMessage || newMessage.trim().length === 0;
+  const isDataEmpty = !data || data.length === 0;
 
   if (isLoading) return <LoadingState />;
   if (error) return <ErrorState />;
@@ -67,7 +70,7 @@ const App: React.FC = () => {
     <>
       <ChatContainer ref={lastMessageRef}>
         <ChatMessages>
-          {isEmptyData ? (
+          {isDataEmpty ? (
             <EmptyState />
           ) : (
             data.map((message: Message, key: number) => {
@@ -102,9 +105,9 @@ const App: React.FC = () => {
               aria-describedby="message-input-hint"
               type="text"
               value={newMessage}
-              onChange={handleMessageChange}
+              onChange={handleMessage}
             />
-            <ChatButton type="submit" disabled={isEmptyInputMessageField}>
+            <ChatButton type="submit" disabled={isMessageFieldEmpty}>
               Send
             </ChatButton>
           </ChatFormContainer>
