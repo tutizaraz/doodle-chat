@@ -20,7 +20,7 @@ const ChatMessages = styled.ul`
   list-style: none;
 
   @media (max-width: 670px) {
-    width: 90%;
+    padding: 10px;
   }
 `
 
@@ -58,7 +58,7 @@ const ChatFormContainer = styled.div`
   margin: 0 auto;
 
   @media (max-width: 670px) {
-    padding: 10px;
+    width: 90%;
   }
 `
 
