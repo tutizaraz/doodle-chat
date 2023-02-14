@@ -15,7 +15,6 @@ import {
   ChatMessages,
   SendTime,
   ChatFormContainer,
-  StateMessage,
 } from "./styles";
 import { Message } from "./types";
 import { useMutation, useQuery } from "react-query";
