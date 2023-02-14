@@ -1,11 +1,12 @@
-import { StateMessage } from "../styles";
+import { FC } from "react"
+import { StateMessage } from "../styles"
 
-const Empty: React.FC = () => {
+const Empty: FC = () => {
   return (
     <StateMessage>
       <h1>No messages</h1>
     </StateMessage>
-  );
-};
+  )
+}
 
-export default Empty;
+export default Empty

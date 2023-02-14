@@ -1,10 +1,10 @@
-import { FC } from "react";
-import { formattedDate } from "../helpers";
-import { SendTime, Message as StyledMessage, ChatMessages } from "../styles";
-import { Message } from "../types";
+import { FC } from "react"
+import { formattedDate } from "../helpers"
+import { SendTime, Message as StyledMessage, ChatMessages } from "../styles"
+import { Message } from "../types"
 
 interface ChatMessagesProps {
-  messages: Message[];
+  messages: Message[]
 }
 
 const Chat: FC<ChatMessagesProps> = ({ messages }) => {
@@ -31,10 +31,10 @@ const Chat: FC<ChatMessagesProps> = ({ messages }) => {
               <SendTime>{formattedDate(message.timestamp)}</SendTime>
             </StyledMessage>
           </ChatMessages>
-        );
+        )
       })}
     </>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat

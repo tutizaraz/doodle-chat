@@ -1,33 +1,33 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
-import { useMutation } from "react-query";
-import { sendMessage } from "../helpers";
-import { ChatButton, ChatForm, ChatFormContainer, ChatInput } from "../styles";
+import { ChangeEvent, FC, FormEvent, useState } from "react"
+import { useMutation } from "react-query"
+import { sendMessage } from "../helpers"
+import { ChatButton, ChatForm, ChatFormContainer, ChatInput } from "../styles"
 
 interface ChatFormProps {
-  refetchMessage: () => void;
+  refetchMessage: () => void
 }
 
 const Form: FC<ChatFormProps> = ({ refetchMessage }) => {
-  const [newMessage, setNewMessage] = useState<string>("");
+  const [newMessage, setNewMessage] = useState<string>("")
 
   const sendMessageMutation = useMutation(sendMessage, {
     onSuccess: () => {
-      setNewMessage("");
-      refetchMessage();
+      setNewMessage("")
+      refetchMessage()
     },
-  });
+  })
 
   const handleMessage = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setNewMessage(value);
-  };
+    const value = event.target.value
+    setNewMessage(value)
+  }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    sendMessageMutation.mutate(newMessage);
-  };
+    event.preventDefault()
+    sendMessageMutation.mutate(newMessage)
+  }
 
-  const isMessageFieldEmpty = !newMessage || newMessage.trim().length === 0;
+  const isMessageFieldEmpty = !newMessage || newMessage.trim().length === 0
 
   return (
     <ChatForm onSubmit={handleSubmit}>
@@ -45,7 +45,7 @@ const Form: FC<ChatFormProps> = ({ refetchMessage }) => {
         </ChatButton>
       </ChatFormContainer>
     </ChatForm>
-  );
-};
+  )
+}
 
-export default Form;
+export default Form

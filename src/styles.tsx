@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import BackgroundImage from "./images/background.png";
+import styled from "styled-components"
+import BackgroundImage from "./images/background.png"
 
 const ChatContainer = styled.div`
   height: 92vh;
@@ -7,7 +7,7 @@ const ChatContainer = styled.div`
   background-image: url(${BackgroundImage});
   background-repeat: repeat;
   position: relative;
-`;
+`
 
 const ChatMessages = styled.ul`
   max-width: 664px;
@@ -22,7 +22,7 @@ const ChatMessages = styled.ul`
   @media (max-width: 670px) {
     width: 90%;
   }
-`;
+`
 
 const Message = styled.li`
   padding: 16px;
@@ -34,13 +34,13 @@ const Message = styled.li`
   color: rgb(95, 101, 101);
   font-weight: bold;
   font-size: 15px;
-`;
+`
 
 const SendTime = styled.div`
   color: rgb(179, 188, 194);
   font-size: 13px;
   text-align: right;
-`;
+`
 
 const ChatForm = styled.form`
   position: fixed;
@@ -48,7 +48,7 @@ const ChatForm = styled.form`
   padding: 15px 0 15px;
   background-color: rgb(54, 152, 212);
   width: 100%;
-`;
+`
 
 const ChatFormContainer = styled.div`
   width: 664px;
@@ -60,14 +60,14 @@ const ChatFormContainer = styled.div`
   @media (max-width: 670px) {
     width: 90%;
   }
-`;
+`
 
 const ChatInput = styled.input`
   flex: 1;
   padding: 10px;
   font-size: 16px;
   border: 1px solid lightgray;
-`;
+`
 
 const ChatButton = styled.button`
   padding: 10px 20px;
@@ -82,7 +82,7 @@ const ChatButton = styled.button`
   &:disabled {
     background-color: rgb(220, 192, 186);
   }
-`;
+`
 
 const StateMessage = styled.div`
   display: flex;
@@ -93,7 +93,7 @@ const StateMessage = styled.div`
   h1 {
     color: rgb(60, 60, 60);
   }
-`;
+`
 
 export {
   ChatContainer,
@@ -105,4 +105,4 @@ export {
   ChatButton,
   SendTime,
   StateMessage,
-};
+}
