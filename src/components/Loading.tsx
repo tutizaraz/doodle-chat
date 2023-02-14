@@ -4,7 +4,7 @@ import { StateMessage } from "../styles"
 const Loading: FC = () => {
   return (
     <StateMessage>
-      <h1>Loading...</h1>
+      <h1 aria-label="Loading">Loading...</h1>
     </StateMessage>
   )
 }
