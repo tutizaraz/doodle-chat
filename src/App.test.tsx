@@ -1,16 +1,9 @@
-import {
-  render,
-  fireEvent,
-  screen,
-  act,
-  waitFor,
-} from "@testing-library/react";
-import App from "./App";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import { QueryClientProvider, QueryClient } from "react-query";
+import App from "./App";
 import { Message } from "./types";
 
-const queryClient = new QueryClient();
 jest.mock("axios");
 
 const MESSAGES = [
@@ -28,6 +21,7 @@ const MESSAGES = [
   },
 ];
 
+const queryClient = new QueryClient();
 const renderApp = () =>
   render(
     <QueryClientProvider client={queryClient}>
@@ -37,18 +31,16 @@ const renderApp = () =>
 
 describe("Doodle chat", () => {
   describe("empty state", () => {
-    it("displays 'No Messages' when data is absent", async () => {
-      (axios.get as jest.Mock).mockImplementationOnce(() =>
-        Promise.resolve({
-          data: [],
-        })
-      );
-      renderApp();
-
-      await waitFor(() => {
-        const loadingElement = screen.getByText(/No messages/i);
-        expect(loadingElement).toBeInTheDocument();
+    beforeEach(() => {
+      (axios.get as jest.Mocked<Message | any>).mockResolvedValue({
+        data: [],
       });
+    });
+
+    it("displays 'No Messages' when data is absent", async () => {
+      renderApp();
+      const loadingElement = await screen.findByText(/No messages/i);
+      expect(loadingElement).toBeInTheDocument();
     });
   });
 
@@ -61,13 +53,10 @@ describe("Doodle chat", () => {
 
     it("renders messages correctly", async () => {
       renderApp();
-
-      await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 0));
-      });
-
-      MESSAGES.forEach((message) => {
-        expect(screen.getByText(message.message)).toBeInTheDocument();
+      await waitFor(() => {
+        MESSAGES.forEach((message) => {
+          expect(screen.getByText(message.message)).toBeInTheDocument();
+        });
       });
     });
   });
@@ -83,7 +72,6 @@ describe("Doodle chat", () => {
       renderApp();
       const input = screen.getByLabelText("Enter message");
       const sendButton = screen.getByText("Send");
-
       expect(sendButton).toBeDisabled();
       fireEvent.change(input, { target: { value: "Hello" } });
       expect(sendButton).not.toBeDisabled();
