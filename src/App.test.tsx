@@ -1,4 +1,10 @@
-import { render, fireEvent, screen, act } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  screen,
+  act,
+  waitFor,
+} from "@testing-library/react";
 import App from "./App";
 import axios from "axios";
 import { QueryClientProvider, QueryClient } from "react-query";
@@ -30,16 +36,19 @@ const renderApp = () =>
   );
 
 describe("Doodle chat", () => {
-  describe("loading state", () => {
-    it("displays 'Loading...' when data is being fetched", async () => {
+  describe("empty state", () => {
+    it("displays 'No Messages' when data is absent", async () => {
       (axios.get as jest.Mock).mockImplementationOnce(() =>
         Promise.resolve({
           data: [],
         })
       );
       renderApp();
-      const loadingElement = screen.getByText(/Loading.../i);
-      expect(loadingElement).toBeInTheDocument();
+
+      await waitFor(() => {
+        const loadingElement = screen.getByText(/No messages/i);
+        expect(loadingElement).toBeInTheDocument();
+      });
     });
   });
 
