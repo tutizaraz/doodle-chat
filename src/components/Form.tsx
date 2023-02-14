@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, FormEvent, useState } from "react"
-import { useMutation } from "react-query"
-import { sendMessage } from "../helpers"
+import useSendMessageMutation from "../hooks/useSendMessageMutation"
 import { ChatButton, ChatForm, ChatFormContainer, ChatInput } from "../styles"
 
 interface ChatFormProps {
@@ -9,13 +8,7 @@ interface ChatFormProps {
 
 const Form: FC<ChatFormProps> = ({ refetchMessage }) => {
   const [newMessage, setNewMessage] = useState<string>("")
-
-  const sendMessageMutation = useMutation(sendMessage, {
-    onSuccess: () => {
-      setNewMessage("")
-      refetchMessage()
-    },
-  })
+  const { mutate } = useSendMessageMutation(refetchMessage)
 
   const handleMessage = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
@@ -24,7 +17,8 @@ const Form: FC<ChatFormProps> = ({ refetchMessage }) => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    sendMessageMutation.mutate(newMessage)
+    mutate(newMessage)
+    setNewMessage("")
   }
 
   const isMessageFieldEmpty = !newMessage || newMessage.trim().length === 0
