@@ -11,7 +11,6 @@ const EmptyState = lazy(() => import("./components/Empty"))
 
 const App: FC = () => {
   const lastMessageRef = useRef<HTMLDivElement | null>(null)
-
   const { isLoading, error, data, refetch } = useFetchMessages()
 
   useScrollToBottom(lastMessageRef, data)
