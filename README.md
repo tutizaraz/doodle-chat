@@ -39,3 +39,9 @@ Running tests with react-testing-library
 ```sh
 yarn test
 ```
+
+## Deployment
+
+This project is deployed using Vercel and is available at the following URL:
+
+https://doodle-chat.vercel.app/
