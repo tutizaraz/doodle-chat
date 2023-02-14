@@ -1,10 +1,11 @@
-import { FC, lazy, useEffect, useRef } from "react"
+import { FC, lazy, useRef } from "react"
 import axios from "axios"
 import { ChatContainer } from "./styles"
 import { useQuery } from "react-query"
 import { API_URL } from "./constants"
 import Chat from "./components/Chat"
 import Form from "./components/Form"
+import useScrollToBottom from "./hooks/useScrollToBottom"
 
 const ErrorState = lazy(() => import("./components/Error"))
 const LoadingState = lazy(() => import("./components/Loading"))
@@ -18,13 +19,7 @@ const App: FC = () => {
     queryFn: () => axios.get(API_URL).then((res) => res.data),
   })
 
-  useEffect(() => {
-    const { current: lastMessage } = lastMessageRef
-
-    if (lastMessage && lastMessage.scrollTo) {
-      lastMessage.scrollTo(0, lastMessage.scrollHeight)
-    }
-  }, [data])
+  useScrollToBottom(lastMessageRef, data)
 
   const isDataEmpty = !data || data.length === 0
 
