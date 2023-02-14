@@ -58,7 +58,7 @@ const ChatFormContainer = styled.div`
   margin: 0 auto;
 
   @media (max-width: 670px) {
-    width: 90%;
+    padding: 10px;
   }
 `
 
