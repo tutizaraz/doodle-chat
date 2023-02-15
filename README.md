@@ -54,6 +54,8 @@ https://doodle-chat.vercel.app/
 - Message editing: Allow users to edit messages they've already sent in the chat
 - Message deleting: Allow users to delete messages they've already sent in the chat
 - Correct displaying links in message boxes
+- Virtualized message list
+
 
 ## Technical decisions
 
